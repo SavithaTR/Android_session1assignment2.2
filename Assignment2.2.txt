@@ -1,0 +1,35 @@
+1. Read multiple JSON files into a directory to convert into a dataset.
+I have files text1, text2, text3 in the directory JSON.
+
+Ans: setwd("Users/Desktop/json")temp=list.files(pattern="text*.")myself = lapply
+=(temp,read.delim) library("rjson")json_file<-"myfiles"library(jsonlite)out<-jsonlite::
+fromJSON(json_file)out[vapply(out,is.null, logical(1))] <-"none"data.frame(out,stringsAsFactors=FALSE)
+[1:5]View(out)
+
+
+2. Parse the following JSON into a data frame.
+js<-'{
+"name": null, "release_date_local": null, "title": "3 (2011)",
+"opening_weekend_take": 1234, "year": 2011,
+"release_date_wide": "2011-09-16", "gross": 59954}'
+
+Ans: library(rjson)
+data.frame(t(unlist(fromJSON(js))))
+   title opening_weekend_take year release_date_wide gross
+3 (2011)                 1234 2011        2011-09-16 59954
+
+
+3. Write a script for Variable Binning using R.
+require(Hmisc)
+cut2(dataset, c(1,4,9,17,23) )
+ [1] [ 4, 9) [ 4, 9) [ 9,17) [ 1, 4) [ 9,17) [ 9,17) [17,23] [17,23] [ 1, 4) [ 9,17)
+[11] [ 9,17) [ 9,17) [ 9,17) [17,23] [ 1, 4) [17,23] [ 9,17) [17,23]
+(Notice that findInterval will use the upper bound as the closed end to form an extra interval unless
+ you replace the maximum with Inf , a reserved word for infinity in R.)
+
+findInterval(dataset, c( c(1,4,9,17,23) ) )
+ [1] 2 2 3 1 3 3 4 4 1 3 3 3 3 4 1 5 3 4
+as.numeric( cut(dataset, c(1,4,9,17,Inf), include.lowest=TRUE))
+ [1] 1 2 2 1 3 3 4 4 1 3 3 3 3 4 1 4 3 3
+as.numeric( cut(dataset, c(1,4,9,17,23), include.lowest=TRUE))
+ [1] 1 2 2 1 3 3 4 4 1 3 3 3 3 4 1 4 3 3
